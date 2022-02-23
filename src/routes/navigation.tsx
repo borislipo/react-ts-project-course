@@ -7,7 +7,6 @@ import { Suspense } from 'react'
 export const Navigation = () => {
     return (
         <Suspense fallback={<h1>Loading</h1>}>
-
             <BrowserRouter>
                 <div className='main-layout'>
                     <nav>
