@@ -10,9 +10,15 @@ interface Route {
 }
 
 //To import components into lazy() we need to export default the component
-const Lazy1 = lazy(() => import("../01-lazyload/pages/lazyPage"));
-const lazy2 = lazy(() => import("../01-lazyload/pages/lazyPage2"));
-const Lazy3 = lazy(() => import("../01-lazyload/pages/lazyPage3"));
+const Lazy1 = lazy(
+  () => import(/*webpackChunkName : 'lazy1'*/ "../01-lazyload/pages/lazyPage")
+);
+const lazy2 = lazy(
+  () => import(/*webpackChunkName : 'lazy2'*/ "../01-lazyload/pages/lazyPage2")
+);
+const Lazy3 = lazy(
+  () => import(/*webpackChunkName : 'lazy3'*/ "../01-lazyload/pages/lazyPage3")
+);
 
 const routes: Route[] = [
   {
