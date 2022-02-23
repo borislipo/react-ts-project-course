@@ -1,36 +1,46 @@
-import { BrowserRouter, Route, NavLink, Routes } from 'react-router-dom'
-import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages'
+import { BrowserRouter, Route, NavLink, Routes, Navigate } from 'react-router-dom'
+import routes from './routes'
 import '../index.css'
 import logo from '../logo.svg'
+import { Suspense } from 'react'
 
 export const Navigation = () => {
     return (
-        <BrowserRouter>
-            <div className='main-layout'>
-                <nav>
-                    <img src={logo} alt="" />
-                    <ul>
-                        <li>
-                            <NavLink className={({ isActive }) => isActive ? 'nav-active' : ''} to='/lazy1'>Home</NavLink>
-                        </li>
+        <Suspense fallback={<h1>Loading</h1>}>
 
-                        <li>
-                            <NavLink className={({ isActive }) => isActive ? 'nav-active' : ''} to='/lazy2'>About</NavLink>
-                        </li>
-
-                        <li>
-                            <NavLink className={({ isActive }) => isActive ? 'nav-active' : ''} to='/lazy3'>Users</NavLink>
-                        </li>
-                    </ul>
-                </nav>
-                <Routes>
-                    <Route path='lazy1' element={<LazyPage1 />}></Route>
-                    <Route path='lazy2' element={<LazyPage2 />}></Route>
-                    <Route path='lazy3' element={<LazyPage3 />}></Route>
-                    <Route path='/*' element={<LazyPage1 />}></Route>
-                </Routes>
-            </div>
-        </BrowserRouter>
+            <BrowserRouter>
+                <div className='main-layout'>
+                    <nav>
+                        <img src={logo} alt="" />
+                        <ul>
+                            {
+                                routes.map(({ to, name }) => {
+                                    return (
+                                        <li key={name}>
+                                            <NavLink className={({ isActive }) => isActive ? 'nav-active' : ''} to={to}>{name}</NavLink>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </nav>
+                    <Routes>
+                        {
+                            routes.map(({ name, path, Component }) => {
+                                return (
+                                    <Route
+                                        key={name}
+                                        path={path}
+                                        element={<Component />}
+                                    />
+                                )
+                            })
+                        }
+                        <Route path='/*' element={<Navigate to={routes[0].to} replace />} />
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </Suspense>
     )
 }
 
