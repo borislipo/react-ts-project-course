@@ -10,6 +10,7 @@ export interface ProductContextProps {
   count: number;
   increaseBy: (value: number) => void;
   product: Product;
+  maxCount?: number;
 }
 
 export interface onChangeArgs {
@@ -19,4 +20,16 @@ export interface onChangeArgs {
 
 export interface ProductInCart extends Product {
   count: number;
+}
+
+export interface InitialValues {
+  count?: number;
+  maxCount?: number;
+}
+
+export interface ChildrenProps {
+  reset: () => void;
+  count: number;
+  maxCount?: number;
+  increaseBy: (value: number) => void;
 }
